@@ -1,15 +1,4 @@
-import random
-
-random.seed(2025)
-
-tam = 10
-crescente = [i for i in range(tam)]
-decrescente = [i for i in range(tam-1, -1, -1)]
-aleatorio = [random.randint(0, tam) for i in range(tam)]
-
-print(f"Crescente: {crescente}")
-print(f"Decrescente: {decrescente}")
-print(f"Aleatório: {aleatorio}")
+import random, time
 
 def heapSort(vetor: list[int], tam: int):
     for quantidade in range(tam-1, -1, -1):
@@ -40,10 +29,43 @@ def cycleSort(vetor: list[int], tam: int):
 
             aux, vetor[posicao] = vetor[posicao], aux
 
+def gerarConjuntos(tamanhos: list[int]):
+    listas = []
+    for tam in tamanhos :
+        dicionario = {
+            "crescente": [i for i in range(tam)],
+            "decrescente": [i for i in range(tam-1, -1, -1)],
+            "aleatorio": [random.randint(0, tam-1) for i in range(tam)],
+        }
+        listas.append(dicionario)
 
-for funcao in [heapSort, cycleSort]:
-    for vetor in [aleatorio[:], crescente[:], decrescente[:]]:
-        print(vetor)
-        funcao(vetor, tam)
-        print(vetor)
+    return listas
+
+def linha(char: str = "=", tam: int = 70):
+    print(char * tam)
+
+
+random.seed(2025)
+
+tamanhos = [10_000, 50_000, 100_000]
+
+listas = gerarConjuntos(tamanhos)
+
+for item, tam in zip(listas, tamanhos):
+    linha()
+    print(f"CONJUNTO DE {tam} ITENS")
+    for nome, vetor in item.items():
+        linha(char="-", tam=30)
+        print(f"{nome.capitalize()}", end="")
+        # print(f": {vetor}")
         print()
+        for funcao in [heapSort, cycleSort]:
+            vetorOrdenar = vetor[:]
+
+            inicio = time.perf_counter()
+            funcao(vetorOrdenar, tam)
+            fim = time.perf_counter()
+
+            tempo = fim - inicio
+            print(f"Ordenado por {(funcao.__name__).upper()} em {tempo:.6f} segundos")
+            # print(f"Saída: {vetorOrdenar}")
