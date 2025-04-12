@@ -16,6 +16,7 @@ def heapify(vetor: list[int], tam: int, raiz: int):
 
         heapify(vetor, tam, maior)
 
+
 def heapSort(vetor: list[int], tam: int):
     primeiroPai = tam // 2 - 1
 
@@ -28,25 +29,26 @@ def heapSort(vetor: list[int], tam: int):
         vetor[i], vetor[0] = vetor[0], vetor[i]
         heapify(vetor, i, 0)
 
-def cycleSort(vetor: list[int], tam: int):
-    for it in range(tam-1):
-        aux = vetor[it]
-        while(True):
-            quantMenor = 0
 
-            for item in vetor[it+1:]:
-                if(item < aux):
-                    quantMenor += 1
+def cycleSort(vetor: list[int], tam: int):
+    for i in range(tam-1):
+        itemAtual = vetor[i]
+        while(True):
+            posicao = i
+            for item in vetor[i+1:]:
+                if(item < itemAtual):
+                    posicao += 1
             
-            if(quantMenor == 0):
-                vetor[it] = aux
+            # Caso o valor já esteja na posição correta, parte para a próxima iteração
+            if(posicao == i):
+                vetor[i] = itemAtual
                 break
             
-            posicao = quantMenor + it
-            while(vetor[posicao] == aux):
+            while(posicao < tam and vetor[posicao] == itemAtual):
                 posicao += 1
 
-            aux, vetor[posicao] = vetor[posicao], aux
+            itemAtual, vetor[posicao] = vetor[posicao], itemAtual
+
 
 def gerarConjuntos(tamanhos: list[int]):
     listas = []
@@ -60,17 +62,16 @@ def gerarConjuntos(tamanhos: list[int]):
 
     return listas
 
+
 def linha(char: str = "=", tam: int = 70):
     print(char * tam)
 
 
 random.seed(2025)
 
-tamanhos = [10]
-# tamanhos = [10_000, 50_000, 100_000]
-
+iteracoes = 30
+tamanhos = [10_000, 50_000, 100_000]
 listas = gerarConjuntos(tamanhos)
-listas[0]["aleatorio"] = [8, 1, 10, 7, 2, 8, 0, 5, 6, 9]
 
 for item, tam in zip(listas, tamanhos):
     linha()
@@ -78,16 +79,16 @@ for item, tam in zip(listas, tamanhos):
     for nome, vetor in item.items():
         linha(char="-", tam=30)
         print(f"{nome.capitalize()}", end="")
-        print(f": {vetor}")
+        # print(f": {vetor}")
         print()
-        for funcao in [heapSort]:
-        # for funcao in [heapSort, cycleSort]:
-            vetorOrdenar = vetor[:]
+        for funcao in [heapSort, cycleSort]:
+            for it in range(iteracoes):
+                vetorOrdenar = vetor[:]
 
-            inicio = time.perf_counter()
-            funcao(vetorOrdenar, tam)
-            fim = time.perf_counter()
+                inicio = time.perf_counter()
+                funcao(vetorOrdenar, tam)
+                fim = time.perf_counter()
 
-            tempo = fim - inicio
-            print(f"Ordenado por {(funcao.__name__).upper()} em {tempo:.6f} segundos")
-            print(f"Saída: {vetorOrdenar}")
+                tempo = fim - inicio
+                print(f"[{it+1}ª Iteração] Ordenado por {(funcao.__name__).upper()} em {tempo:.6f} segundos")
+                # print(f"Saída: {vetorOrdenar}")
