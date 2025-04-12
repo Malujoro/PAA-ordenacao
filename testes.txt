@@ -1,0 +1,42 @@
+======================================================================
+CONJUNTO DE 10000 ITENS
+------------------------------
+Crescente
+Ordenado por HEAPSORT em 3.549383 segundos
+Ordenado por CYCLESORT em 0.594620 segundos
+------------------------------
+Decrescente
+Ordenado por HEAPSORT em 3.524289 segundos
+Ordenado por CYCLESORT em 1.409954 segundos
+------------------------------
+Aleatorio
+Ordenado por HEAPSORT em 3.436807 segundos
+Ordenado por CYCLESORT em 2.779067 segundos
+======================================================================
+CONJUNTO DE 50000 ITENS
+------------------------------
+Crescente
+Ordenado por HEAPSORT em 86.325682 segundos
+Ordenado por CYCLESORT em 14.014496 segundos
+------------------------------
+Decrescente
+Ordenado por HEAPSORT em 89.798061 segundos
+Ordenado por CYCLESORT em 35.930560 segundos
+------------------------------
+Aleatorio
+Ordenado por HEAPSORT em 92.555174 segundos
+Ordenado por CYCLESORT em 80.203163 segundos
+======================================================================
+CONJUNTO DE 100000 ITENS
+------------------------------
+Crescente
+Ordenado por HEAPSORT em 350.222753 segundos
+Ordenado por CYCLESORT em 62.521448 segundos
+------------------------------
+Decrescente
+Ordenado por HEAPSORT em 351.153641 segundos
+Ordenado por CYCLESORT em 144.491554 segundos
+------------------------------
+Aleatorio
+Ordenado por HEAPSORT em 417.869998 segundos
+Ordenado por CYCLESORT em 420.298116 segundos

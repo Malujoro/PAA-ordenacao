@@ -1,4 +1,4 @@
-import random, time
+import random, time, csv
 
 def heapify(vetor: list[int], tam: int, raiz: int):
     maior = raiz
@@ -67,28 +67,32 @@ def linha(char: str = "=", tam: int = 70):
     print(char * tam)
 
 
-random.seed(2025)
+with open("tempos_ordenação.csv", mode="w", newline="") as arquivoCSV:
+    writer = csv.writer(arquivoCSV)
+    writer.writerow(["tamanho", "conjunto", "algoritmo", "iteracao", "tempo"])
 
-iteracoes = 30
-tamanhos = [10_000, 50_000, 100_000]
-listas = gerarConjuntos(tamanhos)
+    random.seed(2025)
+    iteracoes = 30
+    tamanhos = [20_000, 40_000, 60_000]
+    listas = gerarConjuntos(tamanhos)
 
-for item, tam in zip(listas, tamanhos):
-    linha()
-    print(f"CONJUNTO DE {tam} ITENS")
-    for nome, vetor in item.items():
-        linha(char="-", tam=30)
-        print(f"{nome.capitalize()}", end="")
-        # print(f": {vetor}")
-        print()
-        for funcao in [heapSort, cycleSort]:
-            for it in range(iteracoes):
-                vetorOrdenar = vetor[:]
+    for item, tam in zip(listas, tamanhos):
+        linha()
+        print(f"CONJUNTO DE {tam} ITENS")
+        for nome, vetor in item.items():
+            linha(char="-", tam=30)
+            print(f"{nome.capitalize()}", end="")
+            # print(f": {vetor}")
+            print()
+            for funcao in [heapSort, cycleSort]:
+                for it in range(iteracoes):
+                    vetorOrdenar = vetor[:]
 
-                inicio = time.perf_counter()
-                funcao(vetorOrdenar, tam)
-                fim = time.perf_counter()
+                    inicio = time.perf_counter()
+                    funcao(vetorOrdenar, tam)
+                    fim = time.perf_counter()
 
-                tempo = fim - inicio
-                print(f"[{it+1}ª Iteração] Ordenado por {(funcao.__name__).upper()} em {tempo:.6f} segundos")
-                # print(f"Saída: {vetorOrdenar}")
+                    tempo = fim - inicio
+                    print(f"[{it+1}ª Iteração] Ordenado por {(funcao.__name__).upper()} em {tempo:.6f} segundos")
+                    # print(f"Saída: {vetorOrdenar}")
+                    writer.writerow([tam, nome, funcao.__name__, it+1, f"{tempo:.6f}"])
